@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Machine {
 
-      //Ho creato una lista che contiene gli oggetti di tipo Prodotto
+      //Ho creato un ArrayList che contiene gli oggetti di tipo Prodotto e gestire una lista dinamica
       private final List<Prodotto> prodotti = new ArrayList<>();
       //La variabile saldo creata mi serve per dare la possibilità all'utente di inserire il denaro
       private double saldo = 0;
@@ -18,11 +18,17 @@ public class Machine {
       }
 
       //Creo il metodoo per mostrare i prodotti nella lista
+      //Ho creato un sistema tabellare elegante applicando il printf che mi permette di
+      //allineare, spaziare e formattare testo in colonne.
       public void mostraProdotti() {
           System.out.println("\n--- LISTA SNACK BIBITE ---");
           for(int i=0; i < prodotti.size(); i++) {
               Prodotto p = prodotti.get(i);
-              System.out.print(i + ")" + p);
+              System.out.printf("%-3s %-20s %-10s %-10s%n",
+                      (i + 1) + ")",
+                      p.getNome(),
+                      "€" + formatta(p.getPrezzo()),
+                      "Quantità: " + p.getQuantita());
               //Ho avuto problemi nella stampa a schermo perché non avevo inserito nella classe Prodotto il toString
               //In pratica stampavo il prodotto, ma non il suo indice e di conseguenza il prodotto nella lista appariva
               //org.example.Prodotto@5197848c)Caffè - €0.9 - Quantità: 1
@@ -33,7 +39,7 @@ public class Machine {
       //Creo il metodo per inserire il denaro
       public void inserisciDenaro(Double importo) {
           saldo += importo;
-          System.out.println("Saldo attuale: " + saldo);
+          System.out.println("Saldo attuale: € " + saldo);
       }
 
 
@@ -73,7 +79,7 @@ public class Machine {
             saldo -= p.getPrezzo();
 
             System.out.println("Hai acquistato il prodotto: " + p.getNome());
-            System.out.println("Saldo residuo: " + String.format("%.2f", saldo));
+            System.out.println("Saldo residuo: € " + formatta(saldo));
             //Ho dovuto aggiungere questo specificatore di stringhe per arrotondare i numeri decimali.
             //Senza di esso il saldo mi usciva così: 2.5999999.
 
@@ -92,6 +98,11 @@ public class Machine {
       private boolean indiceValido(int indice) {
           //Controllo che l'indice inserito dell'utente punti realmente a una lista esistente
           return indice >= 0 && indice < prodotti.size();
+      }
+
+      public String formatta(Double valore) {
+
+          return String.format("%.2f", valore);
       }
 
 }

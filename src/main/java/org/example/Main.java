@@ -53,12 +53,21 @@ public class Main {
             System.out.println("5) Esci");
             System.out.println("Scelta: ");
 
+            //Ho inserito questo controllo per evitare l'inserimento sbagliato della scelta
+            //Il metodo inserito hasNextInt() ha la funzione di verificare se la scelta inserita è un numero o un carattere.
+            if(!scanner.hasNextInt()) {
+                System.out.println("Errore: devi inserire un numero!");
+                scanner.next();
+                continue;
+            }
+
             int scelta = scanner.nextInt();
+
 
             //Ho utilizzato lo switch per gestire le operazioni
             switch(scelta) {
                 case 1:
-                    System.out.println("Inserisci l'importo: ");
+                    System.out.print("Inserisci l'importo: € ");
                     //Qui richiamo un metodo inserisciDenaro modificando lo stato interno dell'oggetto
                     machine.inserisciDenaro(scanner.nextDouble());
                     break;
@@ -66,7 +75,10 @@ public class Main {
                 case 2:
                     machine.mostraProdotti();
                     System.out.println("Seleziona il prodotto: ");
-                    machine.acquista(scanner.nextInt());
+                    scelta = scanner.nextInt();
+                    machine.acquista(scelta -1);
+                    //Ho apportato una modifica nel case 2 inserendo il -1 nell'indice scelta in modo da rendere compatibile
+                    //la selezione del prodotto con il numero scelto.
                     break;
 
                 case 3:
@@ -75,15 +87,16 @@ public class Main {
                     int indice = scanner.nextInt();
                     System.out.println("Quantità da aggiungere: ");
                     int qta = scanner.nextInt();
-                    machine.ricaricaProdotto(indice, qta);
+                    machine.ricaricaProdotto(indice -1, qta);
                     break;
 
                 case 4:
-                    System.out.println("Totale resto restituito: " + machine.resto());
+                    //Ho corretto la formattazione del resto restituito arrotondando il valore decimale
+                    System.out.println("Totale resto restituito: € " + machine.formatta(machine.resto()));
                     break;
 
                 case 5:
-                    System.out.println("Chiusura programma");
+                    System.out.println("Grazie per averci scelto, torna a trovarci!");
                     running = false;
                     break;
 
