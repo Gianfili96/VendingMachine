@@ -105,4 +105,5 @@ public class Machine {
           return String.format("%.2f", valore);
       }
 
+
 }

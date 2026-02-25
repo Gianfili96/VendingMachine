@@ -21,6 +21,7 @@ Override: ho inserito @Override nel metodo toString per sovrascriverlo miglioran
  */
 
 public class Main {
+
     public static void main(String[] args) {
 
         //Classe scanner input da tastiera per leggere le scelte dell'utente
@@ -55,13 +56,9 @@ public class Main {
 
             //Ho inserito questo controllo per evitare l'inserimento sbagliato della scelta
             //Il metodo inserito hasNextInt() ha la funzione di verificare se la scelta inserita è un numero o un carattere.
-            if(!scanner.hasNextInt()) {
-                System.out.println("Errore: devi inserire un numero!");
-                scanner.next();
-                continue;
-            }
 
-            int scelta = scanner.nextInt();
+
+            int scelta = controlloScanner(scanner);
 
 
             //Ho utilizzato lo switch per gestire le operazioni
@@ -75,12 +72,8 @@ public class Main {
                 case 2:
                     machine.mostraProdotti();
                     System.out.println("Seleziona il prodotto: ");
-                    if(!scanner.hasNextInt()) {
-                        System.out.println("Errore: devi inserire un numero!");
-                        scanner.next();
-                        continue;
-                    }
-                    scelta = scanner.nextInt();
+
+                    scelta = controlloScanner(scanner);
                     machine.acquista(scelta -1);
                     //Ho apportato una modifica nel case 2 inserendo il -1 nell'indice scelta in modo da rendere compatibile
                     //la selezione del prodotto con il numero scelto.
@@ -89,19 +82,11 @@ public class Main {
                 case 3:
                     machine.mostraProdotti();
                     System.out.println("Seleziona il prodotto da ricaricare: ");
-                    if(!scanner.hasNextInt()) {
-                        System.out.println("Errore: devi inserire un numero!");
-                        scanner.next();
-                        continue;
-                    }
-                    int indice = scanner.nextInt();
+
+                    int indice = controlloScanner(scanner);
                     System.out.println("Quantità da aggiungere: ");
-                    if(!scanner.hasNextInt()) {
-                        System.out.println("Errore: devi inserire un numero!");
-                        scanner.next();
-                        continue;
-                    }
-                    int qta = scanner.nextInt();
+
+                    int qta = controlloScanner(scanner);
                     machine.ricaricaProdotto(indice -1, qta);
                     break;
 
@@ -124,5 +109,13 @@ public class Main {
         }
 
         scanner.close();
+    }
+
+    public static int controlloScanner(Scanner scanner) {
+        while (!scanner.hasNextInt()){
+            System.out.println("Errore: inserisci un numero valido!");
+            scanner.next();
+        }
+        return scanner.nextInt();
     }
 }
