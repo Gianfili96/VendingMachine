@@ -75,6 +75,11 @@ public class Main {
                 case 2:
                     machine.mostraProdotti();
                     System.out.println("Seleziona il prodotto: ");
+                    if(!scanner.hasNextInt()) {
+                        System.out.println("Errore: devi inserire un numero!");
+                        scanner.next();
+                        continue;
+                    }
                     scelta = scanner.nextInt();
                     machine.acquista(scelta -1);
                     //Ho apportato una modifica nel case 2 inserendo il -1 nell'indice scelta in modo da rendere compatibile
@@ -84,8 +89,18 @@ public class Main {
                 case 3:
                     machine.mostraProdotti();
                     System.out.println("Seleziona il prodotto da ricaricare: ");
+                    if(!scanner.hasNextInt()) {
+                        System.out.println("Errore: devi inserire un numero!");
+                        scanner.next();
+                        continue;
+                    }
                     int indice = scanner.nextInt();
                     System.out.println("Quantità da aggiungere: ");
+                    if(!scanner.hasNextInt()) {
+                        System.out.println("Errore: devi inserire un numero!");
+                        scanner.next();
+                        continue;
+                    }
                     int qta = scanner.nextInt();
                     machine.ricaricaProdotto(indice -1, qta);
                     break;
